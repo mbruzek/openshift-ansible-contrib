@@ -8,7 +8,8 @@
     new_fqdn: "{{ new_hostname }}.{{ full_dns_domain }}"
 
 - name: Setting hostname and DNS domain
-  hostname: name="{{ new_fqdn }}"
+  # Work around hostname bug: https://github.com/ansible/ansible/issues/31811
+  command: "hostname {{ new_fqdn }}"
 
 - name: Check for cloud.cfg
   stat: path=/etc/cloud/cloud.cfg
